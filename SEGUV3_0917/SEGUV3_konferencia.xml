@@ -1,0 +1,30 @@
+<konferencia>
+  <cim>Adatbázisok és XML Nemzetközi Konferencia</cim>
+  <helyszin>Budapest, Műszaki Egyetem, D épület, előadóterem</helyszin>
+  <datum>2025-09-21</datum>
+
+  <előadó>
+    <név>Dr. Kovács Zoltán</név>
+    <lakcím>1051 Budapest, Nádor utca 15.</lakcím>
+    <adószám>12345678-1-12</adószám>
+  </előadó>
+
+  <hallgatók>
+    <hallgató>
+      <név>Szabó Péter</név>
+      <lakcím>1024 Budapest, Kis utca 2.</lakcím>
+    </hallgató>
+    <hallgató>
+      <név>Horváth Réka</név>
+      <lakcím>2000 Szentendre, Dózsa tér 3.</lakcím>
+    </hallgató>
+    <hallgató>
+      <név>Németh Balázs</név>
+      <lakcím>6723 Szeged, Agyagos utca 4.</lakcím>
+    </hallgató>
+    <hallgató>
+      <név>Kiss Katalin</név>
+      <lakcím>6000 Kecskemét, Szabadság út 5.</lakcím>
+    </hallgató>
+  </hallgatók>
+</konferencia>
