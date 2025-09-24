@@ -1,5 +1,5 @@
 <SEGUV3_orarend>
-    <ora id="1" tipus="eladas">
+    <ora id="1" tipus="eloadas">
         <targy>Elektrotechnika-elektronika</targy>
         <idopont>
             <nap>Hétfő</nap>
@@ -155,3 +155,4 @@
         <szak>Mérnökinformatikus BSc</szak>
     </ora>
 </SEGUV3_orarend>
+
