@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SEGUV3_kurzusfelvetel tanev="2025/26 I." egyetem="Miskolci Egyetem">
+    
+    <hallgato>
+        <hnev>Kovács László</hnev>
+        <szulev>2003</szulev>
+        <szak evf="5">Mérnökinformatikus BSc</szak>
+    </hallgato>
+
+    <kurzusok>
+        <kurzus id="SEGUV3_01">
+            <kurzusnev>Adatbázis rendszerek</kurzusnev>
+            <kredit>5</kredit>
+            <hely>E 32</hely>
+            <idopont>Kedd 10:00-11:30</idopont>
+            <oktato>Dr. Kovács László József</oktato>
+        </kurzus>
+
+        <kurzus id="SEGUV3_02" jovahagyas="igen" nyelv="magyar">
+            <kurzusnev>Web technológiák 1</kurzusnev>
+            <kredit>6</kredit>
+            <hely>L 202</hely>
+            <idopont>Hétfő 12:00-13:30</idopont>
+            <oktato>Dr. Agárdi Anita</oktato>
+            <oraado>Egyetemi adjunktus</oraado>
+        </kurzus>
+
+        <kurzus id="SEGUV3_03">
+            <kurzusnev>Mesterséges intelligencia alapok</kurzusnev>
+            <kredit>5</kredit>
+            <hely>Online</hely>
+            <idopont>Csütörtök 14:00-15:30</idopont>
+            <oktato>Dr. </oktato>
+            <oraado>Egyetemi adjunktus</oraado>
+        </kurzus>
+
+        <kurzus id="SEGUV3_04" jovahagyas="igen" nyelv="magyar">
+            <kurzusnev>Mobil programozás alapok</kurzusnev>
+            <kredit>6</kredit>
+            <hely>L 305</hely>
+            <idopont>Péntek 08:00-09:30</idopont>
+            <oktato>Dr. Agárdi Anita</oktato>
+        </kurzus>
+    </kurzusok>
+
+</SEGUV3_kurzusfelvetel>

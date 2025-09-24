@@ -1,10 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
 <!ELEMENT SEGUV3_orarend (ora+)>
 
 <!ELEMENT ora (targy, idopont, helyszin, oktato, szak)>
 <!ATTLIST ora id ID #REQUIRED>
-<!ATTLIST ora tipus (eladas | eloadas | gyakorlat) #REQUIRED>
+<!ATTLIST ora tipus (eloadas | gyakorlat) #REQUIRED>
 
 <!ELEMENT targy (#PCDATA)>
 

@@ -3,20 +3,28 @@
     <!ELEMENT mozi (film*)>
 
     <!ELEMENT film (rendezo+, szinesz+, iro+)>
-    <!ATTLIST film id ID #REQUIRED>
-    <!ATTLIST film mufaj (horror | romantikus | thriller) "horror">
+    <!ATTLIST film 
+        id ID #REQUIRED
+        mufaj (horror | romantikus | thriller) "horror">
 
     <!ELEMENT rendezo EMPTY>
-    <!ATTLIST rendezo id ID #REQUIRED>
-    <!ATTLIST nev CDATA >
+    <!ATTLIST rendezo 
+        id ID #REQUIRED
+        nev CDATA #REQUIRED>
 
-    <!ELEMENT szinesz EMPTY>
-    <!ATTLIST szinesz id ID #REQUIRED>
-    <!ATTLIST szinesz nev CDATA #REQUIRED>
+    <!ELEMENT szinesz (gyerekszinesz | musicalszinesz | szinkronszinesz)*>
+    <!ATTLIST szinesz 
+        id ID #REQUIRED
+        nev CDATA #REQUIRED>
 
     <!ELEMENT iro EMPTY>
-    <!ATTLIST iro id ID #REQUIRED>
-    <!ATTLIST nev CDATA #REQUIRED>
+    <!ATTLIST iro 
+        id ID #REQUIRED
+        nev CDATA #REQUIRED>
+
+    <!ELEMENT gyerekszinesz EMPTY>
+    <!ELEMENT musicalszinesz EMPTY>
+    <!ELEMENT szinkronszinesz EMPTY>
 ]>
 <mozi>
     <film id="txn_nxm_2jb" mufaj="horror">
@@ -27,7 +35,6 @@
             <musicalszinesz />
             <szinkronszinesz />
         </szinesz>
-        <iro id="trv_4xm_2jb" />
+        <iro id="trv_4xm_2jb" nev="Tamas"/>
     </film>
 </mozi>
-
