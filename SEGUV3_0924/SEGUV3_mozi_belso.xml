@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mozi [
+    <!ELEMENT mozi (film*)>
+
+    <!ELEMENT film (rendezo+, szinesz+, iro+)>
+    <!ATTLIST film id ID #REQUIRED>
+    <!ATTLIST film mufaj (horror | romantikus | thriller) "horror">
+
+    <!ELEMENT rendezo EMPTY>
+    <!ATTLIST rendezo id ID #REQUIRED>
+    <!ATTLIST nev CDATA >
+
+    <!ELEMENT szinesz EMPTY>
+    <!ATTLIST szinesz id ID #REQUIRED>
+    <!ATTLIST szinesz nev CDATA #REQUIRED>
+
+    <!ELEMENT iro EMPTY>
+    <!ATTLIST iro id ID #REQUIRED>
+    <!ATTLIST nev CDATA #REQUIRED>
+]>
+<mozi>
+    <film id="txn_nxm_2jb" mufaj="horror">
+        <rendezo id="nzk_4xm_2jb" nev="Martin" />
+        <szinesz id="u5g_4xm_2jb" nev="David" />
+        <szinesz id="a">
+            <gyerekszinesz />
+            <musicalszinesz />
+            <szinkronszinesz />
+        </szinesz>
+        <iro id="trv_4xm_2jb" />
+    </film>
+</mozi>
+
