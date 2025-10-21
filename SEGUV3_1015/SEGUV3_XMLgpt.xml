@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Gyökérelem -->
+<Vendéglátás>
+
+  <!-- Étterem entitás -->
+  <Étterem Ekód="E001">
+    <Név>Aranykanál Étterem</Név>
+    <Cím>
+      <Város>Pécs</Város>
+      <Utca>Jókai tér</Utca>
+      <Házszám>8</Házszám>
+    </Cím>
+    <Csillag>3</Csillag>
+  </Étterem>
+
+  <!-- Főszakács entitás -->
+  <Főszakács Fkód="F001" Ekód="E001">
+    <Név>Molnár Zsolt</Név>
+    <Életkor>41</Életkor>
+    <Végzettség>Executive Chef</Végzettség>
+  </Főszakács>
+
+  <!-- Szakács entitás -->
+  <Szakács SzKód="S001" Ekód="E001">
+    <Név>Varga Balázs</Név>
+    <Részleg>Grillpult</Részleg>
+    <Végzettség>Szakács OKJ</Végzettség>
+  </Szakács>
+
+  <!-- Gyakornok entitás -->
+  <Gyakornok GyKód="G001" Ekód="E001">
+    <Név>Kerekes Lilla</Név>
+    <Gyakorlat>
+      <Kezdete>2025-03-01</Kezdete>
+      <Időtartama>4 hónap</Időtartama>
+    </Gyakorlat>
+    <Műszak>Esti</Műszak>
+  </Gyakornok>
+
+  <!-- Vendég entitás -->
+  <Vendég Vkód="V001" Ekód="E001">
+    <Név>Tamás Gergely</Név>
+    <Életkor>37</Életkor>
+    <Cím>
+      <Város>Miskolc</Város>
+      <Utca>Petőfi utca</Utca>
+      <Házszám>22</Házszám>
+    </Cím>
+  </Vendég>
+
+  <!-- Rendelés entitás -->
+  <Rendelés Rkód="R001" Vkód="V001" Ekód="E001">
+    <Összeg>14300</Összeg>
+    <Étel>Csirkemell stroganoff rizzsel</Étel>
+  </Rendelés>
+
+</Vendéglátás>
