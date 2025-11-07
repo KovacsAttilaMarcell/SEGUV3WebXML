@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  SEGUV3_XMLSchema.xsd
+  XML Schema for the Sportverseny_adatbazis (SEGUV3) XML document.
+  Contains custom simple types for IDs, DateType and MoneyType.
+  Comments/annotations included before repeating element declarations as requested.
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+
+  <!-- ================= Simple types (custom) ================= -->
+  <xs:simpleType name="SportoloIDType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="S[0-9]{3}"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="CsapatIDType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="C[0-9]{3}"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="VersenyIDType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="V[0-9]{3}"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="HelyszinIDType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="H[0-9]{3}"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="ReszvetelIDType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="R[0-9]{3}"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="SzponzorIDType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="SZ[0-9]{3}"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="DateType">
+    <xs:restriction base="xs:date"/>
+  </xs:simpleType>
+
+  <xs:simpleType name="MoneyType">
+    <xs:restriction base="xs:integer">
+      <xs:minInclusive value="0"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- ================= Complex types ================= -->
+
+  <!-- Sportoló komplex típus -->
+  <xs:complexType name="SportoloType">
+    <xs:sequence>
+      <xs:element name="sportolo_id" type="SportoloIDType"/>
+      <xs:element name="nev">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="vezeteknev" type="xs:string"/>
+            <xs:element name="keresztnev" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="nemzetiseg" type="xs:string"/>
+      <xs:element name="szuletesi_datum" type="DateType"/>
+      <xs:element name="elert_eredmenyek" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="eredmeny" type="xs:string" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Csapat komplex típus -->
+  <xs:complexType name="CsapatType">
+    <xs:sequence>
+      <xs:element name="csapat_id" type="CsapatIDType"/>
+      <xs:element name="nev" type="xs:string"/>
+      <xs:element name="sportag" type="xs:string"/>
+      <xs:element name="edzo_nev" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="vezeteknev" type="xs:string"/>
+            <xs:element name="keresztnev" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="orszag" type="xs:string"/>
+      <!-- kapcsolóként a szponzor hivatkozások (többször előfordulhat) -->
+      <xs:element name="szponzor_id" type="SzponzorIDType" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Verseny komplex típus -->
+  <xs:complexType name="VersenyType">
+    <xs:sequence>
+      <xs:element name="verseny_id" type="VersenyIDType"/>
+      <xs:element name="nev" type="xs:string"/>
+      <xs:element name="datum" type="DateType"/>
+      <xs:element name="kategoria" type="xs:string"/>
+      <xs:element name="szint" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Helyszín komplex típus -->
+  <xs:complexType name="HelyszinType">
+    <xs:sequence>
+      <xs:element name="helyszin_id" type="HelyszinIDType"/>
+      <xs:element name="varos" type="xs:string"/>
+      <xs:element name="orszag" type="xs:string"/>
+      <xs:element name="letesitmeny_nev" type="xs:string"/>
+      <xs:element name="befogado_kepesseg" type="xs:integer"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Részvétel (kapcsoló entitás) komplex típus -->
+  <xs:complexType name="ReszvetelType">
+    <xs:sequence>
+      <xs:element name="reszvetel_id" type="ReszvetelIDType"/>
+      <xs:element name="csapat_id" type="CsapatIDType"/>
+      <xs:element name="verseny_id" type="VersenyIDType"/>
+      <xs:element name="helyezes" type="xs:integer" minOccurs="0"/>
+      <xs:element name="pontszam" type="xs:integer" minOccurs="0"/>
+      <xs:element name="dij_osszeg" type="MoneyType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Szponzor komplex típus -->
+  <xs:complexType name="SzponzorType">
+    <xs:sequence>
+      <xs:element name="sz_id" type="SzponzorIDType"/>
+      <xs:element name="nev" type="xs:string"/>
+      <xs:element name="tipus" type="xs:string"/>
+      <xs:element name="orszag" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- ================= Root element ================= -->
+  <!-- Comments: Following elements are repeating in the document; 
+       each repeating element must have at least two instances in the sample XML. -->
+  <xs:element name="Sportverseny_adatbazis">
+    <xs:annotation>
+      <xs:documentation>Gyökérelem: tartalmazza a Sportolo, Csapat, Verseny, Helyszin, Reszvetel és Szponzor elemeket.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <!-- Sportolók: többször előforduló elem -->
+        <xs:element name="Sportolo" type="SportoloType" minOccurs="0" maxOccurs="unbounded"/>
+        <!-- Csapatok: többször előforduló elem -->
+        <xs:element name="Csapat" type="CsapatType" minOccurs="0" maxOccurs="unbounded"/>
+        <!-- Versenyek: többször előforduló elem -->
+        <xs:element name="Verseny" type="VersenyType" minOccurs="0" maxOccurs="unbounded"/>
+        <!-- Helyszínek: többször előforduló elem -->
+        <xs:element name="Helyszin" type="HelyszinType" minOccurs="0" maxOccurs="unbounded"/>
+        <!-- Részvételek: többször előforduló elem -->
+        <xs:element name="Reszvetel" type="ReszvetelType" minOccurs="0" maxOccurs="unbounded"/>
+        <!-- Szponzorok: többször előforduló elem -->
+        <xs:element name="Szponzor" type="SzponzorType" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>
