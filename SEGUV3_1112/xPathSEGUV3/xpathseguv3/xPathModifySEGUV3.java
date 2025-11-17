@@ -27,7 +27,7 @@ public class xPathModifySEGUV3 {
 		
 		try {
 			builder = factory.newDocumentBuilder();
-			doc = builder.parse("xPathSEGUV3/studentSEGUV3.xml");
+			doc = builder.parse("studentSEGUV3.xml");
 			
 			doc.getDocumentElement().normalize();
 			

@@ -22,7 +22,7 @@ public class xPathQuerySEGUV3 {
 		try {
 			DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-			Document document = documentBuilder.parse("xPathSEGUV3/studentSEGUV3.xml");
+			Document document = documentBuilder.parse("studentSEGUV3.xml");
 			
 			document.getDocumentElement().normalize();
 			

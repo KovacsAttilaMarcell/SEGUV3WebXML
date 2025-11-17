@@ -23,7 +23,7 @@ public class xPathQuery1SEGUV3 {
             DocumentBuilder builder = factory.newDocumentBuilder();
 
             // XML beolvasása
-            Document document = builder.parse("xPathSEGUV3/orarendSEGUV3.xml");
+            Document document = builder.parse("orarendSEGUV3.xml");
             document.getDocumentElement().normalize();
 
             XPath xPath = XPathFactory.newInstance().newXPath();

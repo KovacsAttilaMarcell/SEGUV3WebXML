@@ -56,7 +56,7 @@ public class xPathModify1SEGUV3 {
             factory.setNamespaceAware(true); // NÉLKÜLE SEMMI SEM MŰKÖDIK NAMESPACE-ES XML ENNÉL
 
             DocumentBuilder builder = factory.newDocumentBuilder();
-            Document document = builder.parse("xPathSEGUV3/orarendSEGUV3.xml");
+            Document document = builder.parse("orarendSEGUV3.xml");
             document.getDocumentElement().normalize();
 
             XPath xPath = XPathFactory.newInstance().newXPath();
@@ -152,11 +152,11 @@ public class xPathModify1SEGUV3 {
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 
             DOMSource source = new DOMSource(document);
-            StreamResult result = new StreamResult(new File("xPathSEGUV3/orarendSEGUV31.xml"));
+            StreamResult result = new StreamResult(new File("orarendSEGUV31.xml"));
 
             transformer.transform(source, result);
 
-            System.out.println("Fájl elmentve: xPathSEGUV3/orarendSEGUV31.xml");
+            System.out.println("Fájl elmentve: orarendSEGUV31.xml");
 
         } catch (ParserConfigurationException | SAXException | IOException |
                 XPathExpressionException | TransformerException e) {
