@@ -1,3 +1,5 @@
+package seguv3JSON;
+
 import java.io.FileReader;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
