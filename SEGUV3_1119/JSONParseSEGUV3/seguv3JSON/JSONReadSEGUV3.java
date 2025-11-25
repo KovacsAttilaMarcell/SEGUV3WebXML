@@ -1,3 +1,4 @@
+package seguv3JSON;
 
 import java.io.FileReader;
 import org.json.simple.JSONArray;
@@ -5,28 +6,32 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 public class JSONReadSEGUV3 {
+
     public static void main(String[] args) {
-        try (FileReader reader = new FileReader("orarendSEGUV3.json")) {
+        JSONParser parser = new JSONParser();
 
-            JSONParser parser = new JSONParser();
-            JSONObject rootObj = (JSONObject) parser.parse(reader);
+        try {
+            Object object = parser.parse(new FileReader("orarendSEGUV3.json"));
 
-            JSONObject root = (JSONObject) rootObj.get("SEGUV3_orarend");
-            JSONArray lessons = (JSONArray) root.get("ora");
+            JSONObject root = (JSONObject) object;
+            JSONObject orarend = (JSONObject) root.get("SEGUV3_orarend");
 
-            System.out.println("ÓRAREND:\n");
+            JSONArray oras = (JSONArray) orarend.get("ora");
 
-            for (Object o : lessons) {
-                JSONObject lesson = (JSONObject) o;
-                JSONObject idopont = (JSONObject) lesson.get("idopont");
+            for (Object o : oras) {
+                JSONObject ora = (JSONObject) o;
 
-                System.out.println("Tárgy: " + lesson.get("targy"));
+                System.out.println("Tárgy: " + ora.get("targy"));
+                
+                JSONObject idopont = (JSONObject) ora.get("idopont");
                 System.out.println("Nap: " + idopont.get("nap"));
-                System.out.println("Idő: " + idopont.get("tol") + " - " + idopont.get("ig"));
-                System.out.println("Helyszín: " + lesson.get("helyszin"));
-                System.out.println("Oktató: " + lesson.get("oktato"));
-                System.out.println("Szak: " + lesson.get("szak"));
-                System.out.println("---------------------------");
+                System.out.println("Tól: " + idopont.get("tol"));
+                System.out.println("Ig: " + idopont.get("ig"));
+
+                System.out.println("Helyszín: " + ora.get("helyszin"));
+                System.out.println("Oktató: " + ora.get("oktato"));
+                System.out.println("Szak: " + ora.get("szak"));
+                System.out.println("-----------------------------");
             }
 
         } catch (Exception e) {
