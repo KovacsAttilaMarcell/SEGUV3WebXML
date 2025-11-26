@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="hallgatoSEGUV3.xsl"?>
+
+<class>
+    <student id="01">
+        <keresztnev>Fekete</keresztnev>
+        <vezeteknev>Péter</vezeteknev>
+        <becenev>Petya</becenev>
+        <kor>22</kor>
+        <osztondij>600000</osztondij>
+    </student>
+    <student id="02">
+        <keresztnev>Kek</keresztnev>
+        <vezeteknev>Dora</vezeteknev>
+        <becenev>Dorka</becenev>
+        <kor>20</kor>
+        <osztondij>520000</osztondij>
+    </student>
+    <student id="03">
+        <keresztnev>Zsoldos</keresztnev>
+        <vezeteknev>Andrea</vezeteknev>
+        <becenev>Andi</becenev>
+        <kor>18</kor>
+        <osztondij>450000</osztondij>
+    </student>
+</class>
