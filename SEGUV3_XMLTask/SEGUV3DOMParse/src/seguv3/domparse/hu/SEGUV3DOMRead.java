@@ -149,9 +149,9 @@ public class SEGUV3DOMRead {
         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
         DOMSource source = new DOMSource(doc);
 
-        StreamResult result = new StreamResult(new File("SEGUV3_XML_MENTES.xml"));
+        StreamResult result = new StreamResult(new File("SEGUV3_XML_output.xml"));
         transformer.transform(source, result);
 
-        System.out.println("\nXML dokumentum sikeresen mentve: SEGUV3_XML_MENTES.xml");
+        System.out.println("\nXML dokumentum sikeresen mentve: SEGUV3_XML_output.xml");
     }
 }

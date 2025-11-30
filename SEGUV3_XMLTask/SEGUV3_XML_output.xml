@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Sportverseny nyilvántartás XML dokumentum --><Sportverseny_adatbazis xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="SEGUV3_XMLSchema.xsd">
+      
+    <!-- ===== SPORTOLÓK ===== -->
+      
+    <Sportolo csapat_ref="C001" sportolo_id="S001">
+            
+        <nev>
+                  
+            <vezeteknev>Kovács</vezeteknev>
+                  
+            <keresztnev>Péter</keresztnev>
+                
+        </nev>
+            
+        <nemzetiseg>Magyar</nemzetiseg>
+            
+        <szuletesi_datum>1998-04-12</szuletesi_datum>
+            
+        <elert_eredmenyek>
+                  
+            <eredmeny>1. hely - Országos Bajnokság 2023</eredmeny>
+                  
+            <eredmeny>3. hely - Régiós Verseny 2022</eredmeny>
+                
+        </elert_eredmenyek>
+          
+    </Sportolo>
+      
+    <Sportolo csapat_ref="C002" sportolo_id="S002">
+            
+        <nev>
+                  
+            <vezeteknev>Szabó</vezeteknev>
+                  
+            <keresztnev>Anna</keresztnev>
+                
+        </nev>
+            
+        <nemzetiseg>Magyar</nemzetiseg>
+            
+        <szuletesi_datum>2001-09-03</szuletesi_datum>
+            
+        <elert_eredmenyek>
+                  
+            <eredmeny>2. hely - Ifjúsági Kupa 2024</eredmeny>
+                  
+            <eredmeny>5. hely - Nemzetközi Verseny 2023</eredmeny>
+                
+        </elert_eredmenyek>
+          
+    </Sportolo>
+      
+    <!-- ===== CSAPATOK ===== -->
+      
+    <Csapat csapat_id="C001" szovetseg_ref="SZV001">
+            
+        <nev>Budapest Runners</nev>
+            
+        <sportag>Atlétika</sportag>
+            
+        <edzo_nev>
+                  
+            <vezeteknev>Nagy</vezeteknev>
+                  
+            <keresztnev>Gábor</keresztnev>
+                
+        </edzo_nev>
+            
+        <orszag>Magyarország</orszag>
+          
+    </Csapat>
+      
+    <Csapat csapat_id="C002" szovetseg_ref="SZV002">
+            
+        <nev>Delta Swimmers</nev>
+            
+        <sportag>Úszás</sportag>
+            
+        <edzo_nev>
+                  
+            <vezeteknev>Horváth</vezeteknev>
+                  
+            <keresztnev>Mária</keresztnev>
+                
+        </edzo_nev>
+            
+        <orszag>Magyarország</orszag>
+          
+    </Csapat>
+      
+    <!-- ===== VERSENYEK ===== -->
+      
+    <Verseny helyszin_ref="H001" verseny_id="V001">
+            
+        <nev>Országos Atlétikai Bajnokság 2024</nev>
+            
+        <datum>2024-06-10</datum>
+            
+        <kategoria>Felnőtt</kategoria>
+            
+        <szint>Országos</szint>
+          
+    </Verseny>
+      
+    <Verseny helyszin_ref="H002" verseny_id="V002">
+            
+        <nev>Nemzetközi Úszóverseny 2024</nev>
+            
+        <datum>2024-07-22</datum>
+            
+        <kategoria>Nyílt</kategoria>
+            
+        <szint>Nemzetközi</szint>
+          
+    </Verseny>
+      
+    <!-- ===== HELYSZÍNEK ===== -->
+      
+    <Helyszin helyszin_id="H001">
+            
+        <varos>Budapest</varos>
+            
+        <orszag>Magyarország</orszag>
+            
+        <letesitmeny_nev>Nemzeti Atlétikai Stadion</letesitmeny_nev>
+            
+        <befogado_kepesseg>15000</befogado_kepesseg>
+          
+    </Helyszin>
+      
+    <Helyszin helyszin_id="H002">
+            
+        <varos>Győr</varos>
+            
+        <orszag>Magyarország</orszag>
+            
+        <letesitmeny_nev>City Uszoda</letesitmeny_nev>
+            
+        <befogado_kepesseg>3500</befogado_kepesseg>
+          
+    </Helyszin>
+      
+    <!-- ===== SZÖVETSÉGEK ===== -->
+      
+    <Szovetseg szovetseg_id="SZV001">
+            
+        <nev>Magyar Atlétikai Szövetség</nev>
+            
+        <sportag>Atlétika</sportag>
+            
+        <alapitasi_ev>1985</alapitasi_ev>
+            
+        <kozpont>Budapest</kozpont>
+          
+    </Szovetseg>
+      
+    <Szovetseg szovetseg_id="SZV002">
+            
+        <nev>Magyar Úszó Szövetség</nev>
+            
+        <sportag>Úszás</sportag>
+            
+        <alapitasi_ev>1970</alapitasi_ev>
+            
+        <kozpont>Szeged</kozpont>
+          
+    </Szovetseg>
+      
+    <!-- ===== RÉSZVÉTELEK ===== -->
+      
+    <Reszvetel csapat_ref="C001" reszvetel_id="R001" verseny_ref="V001">
+            
+        <helyezes>1</helyezes>
+            
+        <pontszam>95</pontszam>
+            
+        <dij_osszeg>500000</dij_osszeg>
+            
+        <megjegyzes>Kiemelkedő teljesítmény, országos rekord.</megjegyzes>
+          
+    </Reszvetel>
+      
+    <Reszvetel csapat_ref="C002" reszvetel_id="R002" verseny_ref="V002">
+            
+        <helyezes>3</helyezes>
+            
+        <pontszam>78</pontszam>
+            
+        <dij_osszeg>150000</dij_osszeg>
+            
+        <megjegyzes>Szoros verseny, erős nemzetközi mezőny.</megjegyzes>
+          
+    </Reszvetel>
+    
+</Sportverseny_adatbazis>

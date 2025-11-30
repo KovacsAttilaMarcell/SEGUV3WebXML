@@ -45,18 +45,29 @@
     <!-- ===== Idegen kulcsok ===== -->
     <xs:keyref name="csapat_ref_szovetseg" refer="szovetseg_kulcs">
       <xs:selector xpath="Csapat"/>
-      <xs:field xpath="@szovetseg_ref"/>
+      <xs:field xpath="@sz_cs"/>
     </xs:keyref>
 
     <xs:keyref name="reszvetel_ref_csapat" refer="csapat_kulcs">
       <xs:selector xpath="Reszvetel"/>
-      <xs:field xpath="@csapat_ref"/>
+      <xs:field xpath="@s_r_cs"/>
     </xs:keyref>
 
     <xs:keyref name="reszvetel_ref_verseny" refer="verseny_kulcs">
       <xs:selector xpath="Reszvetel"/>
-      <xs:field xpath="@verseny_ref"/>
+      <xs:field xpath="@s_r_v"/>
     </xs:keyref>
+    
+    <xs:keyref name="sportolo_ref_csapat" refer="csapat_kulcs">
+      <xs:selector xpath="Sportolo"/>
+      <xs:field xpath="@cs_s"/>
+    </xs:keyref>
+    
+    <xs:keyref name="verseny_ref_helyszin" refer="helyszin_kulcs">
+      <xs:selector xpath="Verseny"/>
+      <xs:field xpath="@v_h"/>
+    </xs:keyref>
+
   </xs:element>
 
   <!-- ===== Sportoló ===== -->
@@ -67,7 +78,7 @@
       <xs:element name="elert_eredmenyek" type="EredmenyekTipus" minOccurs="0"/>
     </xs:sequence>
     <xs:attribute name="sportolo_id" type="xs:string" use="required"/>
-    <xs:attribute name="csapat_ref" type="xs:string" use="required"/>
+    <xs:attribute name="cs_s" type="xs:string" use="required"/>
   </xs:complexType>
 
   <xs:complexType name="EredmenyekTipus">
@@ -92,7 +103,7 @@
       <xs:element name="orszag" type="xs:string"/>
     </xs:sequence>
     <xs:attribute name="csapat_id" type="xs:string" use="required"/>
-    <xs:attribute name="szovetseg_ref" type="xs:string" use="required"/>
+    <xs:attribute name="sz_cs" type="xs:string" use="required"/>
   </xs:complexType>
 
   <!-- ===== Verseny ===== -->
@@ -104,7 +115,7 @@
       <xs:element name="szint" type="xs:string"/>
     </xs:sequence>
     <xs:attribute name="verseny_id" type="xs:string" use="required"/>
-    <xs:attribute name="helyszin_ref" type="xs:string" use="required"/>
+    <xs:attribute name="v_h" type="xs:string" use="required"/>
   </xs:complexType>
 
   <!-- ===== Helyszín ===== -->
@@ -137,9 +148,8 @@
       <xs:element name="dij_osszeg" type="xs:integer"/>
       <xs:element name="megjegyzes" type="xs:string" minOccurs="0"/>
     </xs:sequence>
-    <xs:attribute name="reszvetel_id" type="xs:string" use="required"/>
-    <xs:attribute name="csapat_ref" type="xs:string" use="required"/>
-    <xs:attribute name="verseny_ref" type="xs:string" use="required"/>
+    <xs:attribute name="s_r_cs" type="xs:string" use="required"/>
+    <xs:attribute name="s_r_v" type="xs:string" use="required"/>
   </xs:complexType>
 
 </xs:schema>
