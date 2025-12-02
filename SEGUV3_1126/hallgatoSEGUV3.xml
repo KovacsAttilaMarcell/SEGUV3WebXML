@@ -3,24 +3,24 @@
 
 <class>
     <student id="01">
-        <keresztnev>Fekete</keresztnev>
-        <vezeteknev>Péter</vezeteknev>
-        <becenev>Petya</becenev>
+        <keresztnev>Marcell</keresztnev>
+        <vezeteknev>Kovács</vezeteknev>
+        <becenev>Marci</becenev>
         <kor>22</kor>
         <osztondij>600000</osztondij>
     </student>
     <student id="02">
-        <keresztnev>Kek</keresztnev>
-        <vezeteknev>Dora</vezeteknev>
-        <becenev>Dorka</becenev>
-        <kor>20</kor>
-        <osztondij>520000</osztondij>
+        <keresztnev>Ardon</keresztnev>
+        <vezeteknev>Milán</vezeteknev>
+        <becenev>Milán</becenev>
+        <kor>22</kor>
+        <osztondij>50000</osztondij>
     </student>
     <student id="03">
-        <keresztnev>Zsoldos</keresztnev>
-        <vezeteknev>Andrea</vezeteknev>
-        <becenev>Andi</becenev>
-        <kor>18</kor>
-        <osztondij>450000</osztondij>
+        <keresztnev>Dániel</keresztnev>
+        <vezeteknev>Pál</vezeteknev>
+        <becenev>Dani</becenev>
+        <kor>22</kor>
+        <osztondij>80000</osztondij>
     </student>
 </class>
