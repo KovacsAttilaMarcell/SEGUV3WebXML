@@ -67,7 +67,12 @@
       <xs:selector xpath="Verseny"/>
       <xs:field xpath="@v_h"/>
     </xs:keyref>
-
+    
+    <!-- Az 1:1 kapcsolat megvalósításához -->
+    <xs:unique name="unique_helyszin">
+      <xs:selector xpath="Helyszin"/>
+      <xs:field xpath="@v_h"/>
+    </xs:unique>
   </xs:element>
 
   <!-- ===== Sportoló ===== -->
