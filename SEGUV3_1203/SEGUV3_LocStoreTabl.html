@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<title>SEGUV3 Órarend JSON – Táblázat</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+    }
+
+    .topbox {
+        background: #f5f5f5;
+        padding: 20px;
+        width: 600px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        margin-bottom: 25px;
+    }
+
+    table {
+        width: 95%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+
+    th, td {
+        border: 1px solid #aaa;
+        padding: 8px;
+        text-align: left;
+    }
+
+    th {
+        background: #eee;
+        font-weight: bold;
+    }
+</style>
+</head>
+<body>
+
+<h2>SEGUV3 Órarend JSON</h2>
+
+<div class="topbox">
+    <input type="file" id="fileInput">
+    <button onclick="loadJSON()">Fájl betöltése</button>
+    <button onclick="loadFromLS()">LocalStorage betöltése</button>
+</div>
+
+<h3>Órarend (táblázatos nézet)</h3>
+
+<table id="tablazat">
+    <thead>
+        <tr>
+            <th>Tárgy</th>
+            <th>Nap</th>
+            <th>Tól</th>
+            <th>Ig</th>
+            <th>Helyszín</th>
+            <th>Oktató</th>
+            <th>Szak</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<script>
+function loadJSON() {
+    let f = document.getElementById("fileInput").files[0];
+    if (!f) { alert("Nincs kiválasztott fájl!"); return; }
+
+    let reader = new FileReader();
+    reader.onload = function(e) {
+        let data = JSON.parse(e.target.result);
+        localStorage.setItem("orarend", JSON.stringify(data));
+        renderTable();
+    };
+    reader.readAsText(f);
+}
+
+function loadFromLS() {
+    renderTable();
+}
+
+function renderTable() {
+    let tbody = document.querySelector("#tablazat tbody");
+    tbody.innerHTML = "";
+
+    let data = JSON.parse(localStorage.getItem("orarend") || "{}");
+    if (!data.SEGUV3_orarend) return;
+
+    let lista = data.SEGUV3_orarend.ora;
+
+    lista.forEach(o => {
+        tbody.innerHTML += `
+            <tr>
+                <td>${o.targy}</td>
+                <td>${o.idopont.nap}</td>
+                <td>${o.idopont.tol}</td>
+                <td>${o.idopont.ig}</td>
+                <td>${o.helyszin}</td>
+                <td>${o.oktato}</td>
+                <td>${o.szak}</td>
+            </tr>
+        `;
+    });
+}
+</script>
+
+</body>
+</html>

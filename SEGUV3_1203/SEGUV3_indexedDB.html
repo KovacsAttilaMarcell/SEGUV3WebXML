@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<title>SEGUV3 IndexedDB - Tulajdonos & Autó</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+    }
+
+    h1, h2 {
+        margin-bottom: 10px;
+    }
+
+    .flex {
+        display: flex;
+        gap: 20px;
+        margin-bottom: 20px;
+    }
+
+    .box {
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        padding: 15px;
+        width: 340px;
+    }
+
+    label {
+        display: block;
+        margin-top: 8px;
+    }
+
+    input, select {
+        width: 95%;
+        padding: 5px;
+        margin-top: 3px;
+    }
+
+    button {
+        margin-top: 10px;
+        padding: 6px 12px;
+        cursor: pointer;
+        border-radius: 4px;
+        border: 1px solid #999;
+        background: #f0f0f0;
+    }
+
+    textarea {
+        width: 100%;
+        height: 120px;
+        margin-top: 10px;
+    }
+
+    ul {
+        margin-top: 8px;
+        padding-left: 18px;
+    }
+
+    .export-box {
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        padding: 15px;
+        margin-top: 25px;
+        width: 700px;
+    }
+
+    .small-label {
+        font-size: 12px;
+        color: #555;
+    }
+</style>
+</head>
+<body>
+
+<h1>NEPTUNKOD IndexedDB - Tulajdonos & Autó</h1>
+
+<div class="flex">
+    <!-- Tulajdonos box -->
+    <div class="box">
+        <h2>Tulajdonos</h2>
+
+        <label>Név:</label>
+        <input id="tulajNev" placeholder="Név">
+
+        <label>Cím:</label>
+        <input id="tulajCim" placeholder="Cím">
+
+        <label>Telefon:</label>
+        <input id="tulajTel" placeholder="Telefon">
+
+        <button onclick="addTulaj()">Tulajdonos hozzáadása</button>
+
+        <h3>Keresés</h3>
+        <label class="small-label">Név alapján</label>
+        <input id="tulajKeres" onkeyup="listTulajok()">
+
+        <h3>Összes tulajdonos</h3>
+        <div id="tulajLista">Nincs megjeleníthető tulajdonos.</div>
+    </div>
+
+    <!-- Autó box -->
+    <div class="box">
+        <h2>Autó</h2>
+
+        <label>Rendszám:</label>
+        <input id="autoRendszam" placeholder="ABC-123">
+
+        <label>Típus:</label>
+        <input id="autoTipus" placeholder="Típus">
+
+        <label>Szín:</label>
+        <input id="autoSzin" placeholder="Szín">
+
+        <label>Kor:</label>
+        <input id="autoKor" placeholder="Év">
+
+        <label>Ár:</label>
+        <input id="autoAr" placeholder="Ft">
+
+        <label>Tulaj:</label>
+        <select id="autoTulajSelect">
+            <option value="">Válassz tulajdonost...</option>
+        </select>
+
+        <button onclick="addAuto()">Autó hozzáadása</button>
+
+        <h3>Keresés</h3>
+        <label class="small-label">Rendszám, típus vagy szín alapján</label>
+        <input id="autoKeres" onkeyup="listAutok()">
+
+        <h3>Szűrés</h3>
+        <label class="small-label">Tulajdonos szerint</label>
+        <select id="autoSzuresTulaj" onchange="listAutok()">
+            <option value="">Összes tulajdonos</option>
+        </select>
+
+        <h3>Autók listája</h3>
+        <div id="autoLista">Nincs megjeleníthető autó.</div>
+    </div>
+</div>
+
+<!-- JSON export / import box -->
+<div class="export-box">
+    <h2>Adatok mentése és betöltése</h2>
+    <p class="small-label">
+        Az export minden tulajdonost és autót egy JSON fájlba ment.
+        Az import betölti a fájl tartalmát és felülírja a jelenlegi adatokat.
+    </p>
+
+    <button onclick="exportJSON()">Exportálás JSON fájlba</button>
+    <br><br>
+    <input type="file" id="jsonFile">
+    <button onclick="importJSON()">Importálás JSON-ből</button>
+</div>
+
+<script>
+/* -----------------------
+   IndexedDB inicializálás
+   ----------------------- */
+
+let db = null;
+
+function initDB() {
+    let request = indexedDB.open("AutoTulajDB_v1", 1);
+
+    request.onupgradeneeded = function (e) {
+        db = e.target.result;
+
+        // Tulajdonos tábla
+        if (!db.objectStoreNames.contains("tulaj")) {
+            let store = db.createObjectStore("tulaj", {
+                keyPath: "id",
+                autoIncrement: true
+            });
+            store.createIndex("nev", "nev", { unique: false });
+        }
+
+        // Autó tábla
+        if (!db.objectStoreNames.contains("auto")) {
+            let store = db.createObjectStore("auto", {
+                keyPath: "id",
+                autoIncrement: true
+            });
+            store.createIndex("rendszam", "rendszam", { unique: false });
+            store.createIndex("tulajId", "tulajId", { unique: false });
+        }
+    };
+
+    request.onsuccess = function (e) {
+        db = e.target.result;
+        refreshAll();
+    };
+
+    request.onerror = function (e) {
+        console.error("IndexedDB hiba:", e.target.error);
+        alert("Nem sikerült megnyitni az IndexedDB-t.");
+    };
+}
+
+/* -----------------------
+   Tulajdonos CRUD
+   ----------------------- */
+
+function addTulaj() {
+    if (!db) return;
+
+    let nev = document.getElementById("tulajNev").value.trim();
+    let cim = document.getElementById("tulajCim").value.trim();
+    let tel = document.getElementById("tulajTel").value.trim();
+
+    if (!nev) {
+        alert("A név mező kötelező!");
+        return;
+    }
+
+    let tx = db.transaction(["tulaj"], "readwrite");
+    let store = tx.objectStore("tulaj");
+
+    store.add({ nev, cim, tel });
+
+    tx.oncomplete = function () {
+        document.getElementById("tulajNev").value = "";
+        document.getElementById("tulajCim").value = "";
+        document.getElementById("tulajTel").value = "";
+        refreshAll();
+    };
+
+    tx.onerror = function (e) {
+        alert("Hiba a tulajdonos mentésekor.");
+        console.error(e.target.error);
+    };
+}
+
+function listTulajok() {
+    if (!db) return;
+
+    let keres = document.getElementById("tulajKeres").value.toLowerCase();
+    let tx = db.transaction(["tulaj"], "readonly");
+    let store = tx.objectStore("tulaj");
+    let req = store.getAll();
+
+    req.onsuccess = function () {
+        let lista = req.result || [];
+        let div = document.getElementById("tulajLista");
+
+        if (keres) {
+            lista = lista.filter(t => t.nev.toLowerCase().includes(keres));
+        }
+
+        if (!lista.length) {
+            div.innerHTML = "Nincs megjeleníthető tulajdonos.";
+            return;
+        }
+
+        let html = "<ul>";
+        lista.forEach(t => {
+            html += `<li>${t.nev} – ${t.cim || ""} (${t.tel || ""})</li>`;
+        });
+        html += "</ul>";
+        div.innerHTML = html;
+    };
+}
+
+/* -----------------------
+   Autó CRUD
+   ----------------------- */
+
+function addAuto() {
+    if (!db) return;
+
+    let rendszam = document.getElementById("autoRendszam").value.trim();
+    let tipus   = document.getElementById("autoTipus").value.trim();
+    let szin    = document.getElementById("autoSzin").value.trim();
+    let kor     = document.getElementById("autoKor").value.trim();
+    let ar      = document.getElementById("autoAr").value.trim();
+    let tulajId = document.getElementById("autoTulajSelect").value;
+
+    if (!rendszam || !tulajId) {
+        alert("A rendszám és a tulajdonos kiválasztása kötelező!");
+        return;
+    }
+
+    let tx = db.transaction(["auto"], "readwrite");
+    let store = tx.objectStore("auto");
+
+    store.add({
+        rendszam, tipus, szin, kor, ar,
+        tulajId: Number(tulajId)
+    });
+
+    tx.oncomplete = function () {
+        document.getElementById("autoRendszam").value = "";
+        document.getElementById("autoTipus").value = "";
+        document.getElementById("autoSzin").value = "";
+        document.getElementById("autoKor").value = "";
+        document.getElementById("autoAr").value = "";
+        document.getElementById("autoTulajSelect").value = "";
+        refreshAll();
+    };
+
+    tx.onerror = function (e) {
+        alert("Hiba az autó mentésekor.");
+        console.error(e.target.error);
+    };
+}
+
+function listAutok() {
+    if (!db) return;
+
+    // először töltsük be a tulajdonosokat névhez
+    let tx1 = db.transaction(["tulaj"], "readonly");
+    let tulStore = tx1.objectStore("tulaj");
+    let reqTul = tulStore.getAll();
+
+    reqTul.onsuccess = function () {
+        let tulajok = reqTul.result || [];
+        let tulMap = {};
+        tulajok.forEach(t => tulMap[t.id] = t.nev);
+
+        let tx2 = db.transaction(["auto"], "readonly");
+        let autoStore = tx2.objectStore("auto");
+        let reqAuto = autoStore.getAll();
+
+        reqAuto.onsuccess = function () {
+            let autok = reqAuto.result || [];
+            let keres = document.getElementById("autoKeres").value.toLowerCase();
+            let szuresTulaj = document.getElementById("autoSzuresTulaj").value;
+            let div = document.getElementById("autoLista");
+
+            // keresés
+            if (keres) {
+                autok = autok.filter(a =>
+                    (a.rendszam || "").toLowerCase().includes(keres) ||
+                    (a.tipus   || "").toLowerCase().includes(keres) ||
+                    (a.szin    || "").toLowerCase().includes(keres)
+                );
+            }
+
+            // szűrés tulajra
+            if (szuresTulaj) {
+                autok = autok.filter(a => String(a.tulajId) === szuresTulaj);
+            }
+
+            if (!autok.length) {
+                div.innerHTML = "Nincs megjeleníthető autó.";
+                return;
+            }
+
+            let html = "<ul>";
+            autok.forEach(a => {
+                let tn = tulMap[a.tulajId] || "Ismeretlen tulaj";
+                html += `<li>${a.rendszam} – ${a.tipus || ""}, ${a.szin || ""}, tulaj: ${tn}</li>`;
+            });
+            html += "</ul>";
+            div.innerHTML = html;
+        };
+    };
+}
+
+/* -----------------------
+   Dropdownok frissítése
+   ----------------------- */
+
+function refreshDropdowns() {
+    if (!db) return;
+
+    let tx = db.transaction(["tulaj"], "readonly");
+    let store = tx.objectStore("tulaj");
+    let req = store.getAll();
+
+    req.onsuccess = function () {
+        let tulajok = req.result || [];
+        let selAuto = document.getElementById("autoTulajSelect");
+        let selSzures = document.getElementById("autoSzuresTulaj");
+
+        selAuto.innerHTML = '<option value="">Válassz tulajdonost...</option>';
+        selSzures.innerHTML = '<option value="">Összes tulajdonos</option>';
+
+        tulajok.forEach(t => {
+            let opt1 = document.createElement("option");
+            opt1.value = t.id;
+            opt1.textContent = t.nev;
+            selAuto.appendChild(opt1);
+
+            let opt2 = document.createElement("option");
+            opt2.value = t.id;
+            opt2.textContent = t.nev;
+            selSzures.appendChild(opt2);
+        });
+    };
+}
+
+/* -----------------------
+   Export / Import JSON
+   ----------------------- */
+
+function exportJSON() {
+    if (!db) return;
+
+    let tx1 = db.transaction(["tulaj"], "readonly");
+    let store1 = tx1.objectStore("tulaj");
+    let req1 = store1.getAll();
+
+    req1.onsuccess = function () {
+        let tulajok = req1.result || [];
+
+        let tx2 = db.transaction(["auto"], "readonly");
+        let store2 = tx2.objectStore("auto");
+        let req2 = store2.getAll();
+
+        req2.onsuccess = function () {
+            let autok = req2.result || [];
+
+            let data = { tulajok, autok };
+            let blob = new Blob([JSON.stringify(data, null, 2)], {
+                type: "application/json"
+            });
+
+            let url = URL.createObjectURL(blob);
+            let a = document.createElement("a");
+            a.href = url;
+            a.download = "AutoTulajDB_export.json";
+            a.click();
+            URL.revokeObjectURL(url);
+        };
+    };
+}
+
+function importJSON() {
+    if (!db) return;
+
+    let file = document.getElementById("jsonFile").files[0];
+    if (!file) {
+        alert("Nincs kiválasztott JSON fájl!");
+        return;
+    }
+
+    let reader = new FileReader();
+    reader.onload = function (e) {
+        try {
+            let data = JSON.parse(e.target.result);
+            let tulajok = data.tulajok || [];
+            let autok = data.autok || [];
+
+            let tx = db.transaction(["tulaj", "auto"], "readwrite");
+            let tStore = tx.objectStore("tulaj");
+            let aStore = tx.objectStore("auto");
+
+            // először töröljük a régieket
+            tStore.clear();
+            aStore.clear();
+
+            // majd visszatöltjük
+            tulajok.forEach(t => tStore.put(t));
+            autok.forEach(a => aStore.put(a));
+
+            tx.oncomplete = function () {
+                alert("Importálás sikeres, adatok frissítve.");
+                refreshAll();
+            };
+
+            tx.onerror = function (e) {
+                alert("Hiba importáláskor.");
+                console.error(e.target.error);
+            };
+        } catch (err) {
+            alert("Hibás JSON fájl!");
+            console.error(err);
+        }
+    };
+
+    reader.readAsText(file);
+}
+
+/* -----------------------
+   Segédfüggvény
+   ----------------------- */
+
+function refreshAll() {
+    listTulajok();
+    listAutok();
+    refreshDropdowns();
+}
+
+/* -----------------------
+   Indításkor
+   ----------------------- */
+
+window.onload = function () {
+    initDB();
+};
+</script>
+
+</body>
+</html>
